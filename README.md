@@ -1,6 +1,6 @@
 #rapidnewsng
 
-RapidNewsng is a news aggreagation web application built using Django with non-relational, it was designed from a project https://github.com/stephenmcd/drum to support non-relational database. Rapidnewsng also has an api designed with django restframework
+RapidNewsng is a news aggreagation web application built using Django with non-relational, it was designed from a project [DRUM](https://github.com/stephenmcd/drum) to support non-relational database. Rapidnewsng also has an api designed with django restframework
 
 
 **Dependencies**
