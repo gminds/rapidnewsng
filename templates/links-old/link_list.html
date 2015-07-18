@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load comments %}
+{% block content %}
+{% if is_paginated %}
+<ol start="{{ page_obj.start_index }}" class="title">
+{% else %}
+<ol>
+{% endif %}
+{% for link in object_list %}
+ <form method="post" action="{% url 'vote' %}" class="vote_form">
+    <li class="title> 
+    {% csrf_token %}
+    <input type="hidden" id="id_link" name="link" class="hidden_id" value="{{ link.pk }}" />
+	<input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+	{% if not user.is_authenticated %}
+	<button disabled title="Please login to vote">Like</button>
+    {% elif link.pk not in voted %}
+	<button>Like</button>
+	 {% else %}
+   <button>Dislike</button>
+   {% endif %}
+   <a href="{{ link.url }}">{{ link.title }}</a>
+     <br>
+	 <span style="font-size: 11px !important; color: #aaaaaa;">
+	  <td class="subtext" ><span id="score" style="font-size: 11px !important; color: #aaaaaa;">{{ link.votes }} likes </span>by <a href="user">{{ link.submitter }}</a> {{ link.submitted_on|timesince }} ago  | <a href="{% url 'link_detail' pk=link.pk %}">{% get_comment_count for link as comment_count %}{{ comment_count }} comment{{ comment_count|pluralize }}</a></td></span>
+     
+    </li>
+	</form>
+
+{% endfor %}
+</ol>
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">More &raquo;</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

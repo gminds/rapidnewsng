@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block meta_title %}{{ object.title }}{% endblock %}
+{% block title %}
+<a href="{{ object.url }}">{{ object.title }}</a>
+<span class="domain">({{ object.domain }})</span>
+{% endblock %}
+{% load comments %}
+
+{% block main %}
+<div class="link-view">
+    <p class="description"><!-- object.description !--></p>
+    <div class="link-meta">
+      
+		
+							<div class="rating">
+
+						<form method="post" action="{% url 'vote' %}">
+						   
+						   
+						   
+						{% csrf_token %}
+						<input type="hidden" id="id_link" name="link" class="hidden_id" value="{{ link.pk }}" />
+						<input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+					<input id="id_object_pk" name="object_pk" type="hidden" value="11903" />
+
+
+
+
+					<div class="form-group input_id_value_0">
+						
+					 <ul>
+					<li><label for="id_value_0"><input id="id_value_0" name="value" type="radio" value="-1" /> -1</label></li>
+					<li><label for="id_value_1"><input id="id_value_1" name="value" type="radio" value="1" /> 1</label></li>
+					</ul>
+						
+					</div>
+						   
+						   
+						   
+						</form>
+
+						<span class="arrows">
+							<a href="#"><i class="icon icon-arrow-up"></i></a>
+							<a href="#"><i class="icon icon-arrow-down"></i></a>
+						</span>
+
+						<span class="score">
+							{{ link.votes }}
+						</span>
+
+					</div>
+					
+					
+					
+		
+		
+       by <a class="profile" href="{{ link.url }}">{{ link.submitter }}</a>
+        {{  link.submitted_on|timesince  }} ago      
+    </div>
+	
+	</div>
+	
+	
+	
+	
+	
+<div class="comments">
+  <h3>Comments</h3>
+
+  <div class="comment_form">
+{% if user.is_authenticated %}
+  {% get_comment_form for object as form %}
+  <form action="{% comment_form_target %}" method="POST">
+    {% csrf_token %}
+    {{ form.comment }}
+   
+    {{ form.content_type }}
+    {{ form.object_pk }}
+    {{ form.timestamp }}
+    {{ form.security_hash }}
+    <input type="hidden" name="name" value="{{ user }}" />
+    <input type="hidden" name="email" value="{{ user.email|default:'d@ummy.com' }}" />
+    <input type="hidden" name="url" value="" />
+    <input type="hidden" name="next" 
+	   value="{% url 'link_detail' pk=object.id %}" />
+    <div class="actions">
+    <input class="btn btn-warning btn-large" id="id_submit" type="submit" value="Add comment">
+   </div>
+  </form>
+{% else %}
+  <p>Please <a href="{% url 'login' %}">log in
+  </a> to leave a comment.</p>
+{% endif %}
+  </div>
+
+
+  {% render_comment_list for object %}
+</div>
+
+	
+	
+	
+	
+	
+	
+	
+
+{% endblock %}

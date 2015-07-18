@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+
+{% block meta_title %}{{ title|default:"RapidNewsng" }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block main %}
+{% load comments %}
+
+{% for link in object_list %}
+<div class="link-item clearfix">
+    
+	{% if not user.is_authenticated %}
+	 {% endif %}
+    <div class="rating">
+
+    <form method="post" action="{% url 'vote' %}" class="vote_form">
+       
+	   
+	   
+	{% csrf_token %}
+    <input type="hidden" id="id_link" name="link" class="hidden_id" value="{{ link.pk }}" />
+	<input type="hidden" id="id_voter" name="voter" class="hidden_id" value="{{ user.pk }}" />
+    <input id="id_object_pk" name="object_pk" type="hidden" value="11903" />
+
+    
+
+
+<div class="form-group input_id_value_0">
+
+
+ <ul>
+<li><label for="id_value_0"><input id="id_value_0" name="value" type="radio" value="-1" /> -1</label></li>
+<li><label for="id_value_1"><input id="id_value_1" name="value" type="radio" value="1" /> 1</label></li>
+</ul>
+    
+</div>
+	   
+	   
+	   
+    </form>
+
+    <span class="arrows">
+        <a href="#"><i class="icon icon-arrow-up"></i></a>
+        <a href="#"><i class="icon icon-arrow-down"></i></a>
+    </span>
+
+    <span class="score">
+        {{ link.votes }}
+    </span>
+
+</div>
+
+	
+	
+  
+   
+    <div class="link-detail{% if link.votes < 0 %} link-negative{% endif %}">
+        <h2>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+            <span class="domain">({{ link.linksource }})</span>
+        </h2>
+        by <a class="profile" href="{{ link.url }}">{{ link.submitter }}</a>
+        {{  link.submitted_on|timesince  }} ago |
+       
+        <a class="comments" href="{% url 'link_detail' pk=link.pk %}">{% get_comment_count for link as comment_count %}{{ comment_count }} comment{{ comment_count|pluralize }}</a>
+    </div>
+</div>
+{% empty %}
+<p>{{ no_data }}</p>
+{% endfor %}
+
+{% if is_paginated %}
+<div class="pagination">
+<ul>
+    {% if page_obj.has_next %}
+	<li class="next">
+        <a href="?page={{ page_obj.next_page_number }}">More &raquo;</a>
+</li>
+    {% endif %}
+</ul>
+</div>
+{% endif %}
+{% endblock %}

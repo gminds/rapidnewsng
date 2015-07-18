@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block meta_title %}New Link{% endblock %}
+{% block title %}New Link{% endblock %}
+
+
+{% block main %}
+
+<form method="post" action="">
+  {% csrf_token %}
+  <fieldset>{{ form.as_p }}</fieldset>
+<div class="actions">
+    <input class="btn btn-warning btn-large" type="submit" value="Submit New Link">
+</div>
+</form>
+{% endblock %}

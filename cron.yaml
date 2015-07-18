@@ -1,0 +1,25 @@
+cron:
+- description: GUARDIAN
+  url: /fetchRs2/?channel=http://www.ngrguardiannews.com/comments/feed/
+  schedule: every 8 hours
+- description: PUNCH
+  url: /fetchRs2/?channel=http://www.punchng.com/feed/
+  schedule: every 10 hours
+- description: SUNNEWS
+  url: /fetchRs2/?channel=http://sunnewsonline.com/new/?feed=rss2
+  schedule: every 12 hours
+- description: THISDAY
+  url: /fetchRs2/?channel=http://www.thisdaylive.com/go/search/?search=News+Nigeria&contenttype=article&sort=date&output=rss
+  schedule: every 16 hours
+- description: VANGUARD
+  url: /fetchRs2/?channel=http://www.vanguardngr.com/feed/
+  schedule: every 14 hours
+- description: NAIRALAND
+  url: /fetchRs2/?channel=http://www.nairaland.com/feed
+  schedule: every 6 hours
+- description: Derank
+  url: /derank
+  schedule: every 24 hours
+- description: Rerank
+  url: /rerank
+  schedule: every 11 hours

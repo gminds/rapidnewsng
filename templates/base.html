@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+{% load staticfiles %}
+<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+
+<style>
+@import url("http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic");
+@import url(http://fonts.googleapis.com/css?family=Risque);
+</style>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/bootstrap2.css' %}">
+<link rel="stylesheet" href="{% static 'css/mezzanine1.css' %}">
+<link rel="stylesheet" href="{% static 'css/flat-ui.css' %}">
+<link rel="stylesheet" href="{% static 'css/drum.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap2-responsive.css' %}">
+
+
+
+
+<script src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
+<script src="{% static 'js/bootstrap2.js' %}"></script>
+<script src="{% static 'js/bootstrap2-extras.js' %}"></script>
+<script src="{% static 'js/drum.js' %}"></script>
+<script src="{% static 'js/jquery.pjax.js' %}"></script> 
+<!--
+<script src="{% static 'js/vote.js' %}"></script>!-->
+
+
+{% block extra_head %}{% endblock %}
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse">
+<div class="navbar-inner navbar-fixed-top">
+<div class="container">
+    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </a>
+
+   <a class="brand" href="/">RapidNewsng</a>
+    <ul class="nav">
+        <li class="divider-vertical"></li>
+        {% url "link_list_latest" as link_list_latest %}
+        {% url "comment_list_latest" as comment_list_latest %}
+        {% url "comment_list_best" as comment_list_best %}
+        {% url "tag_list" as tag_list %}
+        <li{% if request.path == link_list_latest %} class="active"{% endif %}><a href="{{ link_list_latest }}">Home</a></li>
+        <li{% if request.path == comment_list_latest %} class="active"{% endif %}><a href="{{ comment_list_latest }}/newest">Newest</a></li>
+        
+    </ul>
+    <div class="nav-collapse">
+        <div class="pull-right">
+            <a class="btn btn-small btn-warning no-pjax" href="{% url "link_create" %}">New Link</a>
+        </div>
+        <ul class="nav pull-right"><li class="divider-vertical"></li></ul>
+      
+			  
+			  
+		<ul class="nav pull-right"><li class="divider-vertical"></li></ul>
+
+		<div class="pull-right">
+			{% if user.is_authenticated %}
+			<a href="{% url 'logout' %}"
+				class="btn btn-primary btn-small">Logout</a>
+			{% else %}
+			<a href="{% url 'login' %}"
+				class="btn btn-primary btn-small">Login</a>
+			<a href="{% url 'registration_register' %}"
+				class="btn btn-primary btn-small">Register</a>
+			{% endif %}
+		</div>
+
+		{% if user.is_authenticated %}
+		<ul class="nav pull-right">
+			
+			<li><a href="{% url 'profile' slug=user.username %}">{{ user.username }}</a></li>
+		</ul>
+		{% endif %}
+
+
+
+	  
+	  
+	  
+    </div>
+</div>
+</div>
+</div>
+
+<div class="container main">
+
+<h1>{% block title %}{% endblock %}</h1>
+</div>
+
+<div class="container main">
+<div class="row">
+<div class="span12 middle">
+    {% block main %}{% endblock %}
+</div>
+</div>
+</div>
+
+<footer>
+<div class="container">
+    <p>
+        Built using <a href="http://github.com/gminds/rapidnewsng">Gminds</a>
+        <span class="separator">|</span>
+        <a href="https://github.com/gminds/rapidnewsng">Open Source</a>
+        <span class="separator">|</span>
+    </p>
+</div>
+</footer>
+
+
+</body>
+</html>
